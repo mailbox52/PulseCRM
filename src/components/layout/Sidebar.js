@@ -1,19 +1,15 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import {
-  LayoutDashboard, Users, TrendingUp, Briefcase,
-  CheckSquare, Mail, BarChart3, Settings, Zap
-} from 'lucide-react'
 
 const NAV = [
-  { href: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/contacts', label: 'Contacts', icon: Users },
-  { href: '/leads', label: 'Leads', icon: TrendingUp },
-  { href: '/pipeline', label: 'Pipeline', icon: Briefcase },
-  { href: '/tasks', label: 'Tasks', icon: CheckSquare },
-  { href: '/emails', label: 'Emails', icon: Mail },
-  { href: '/analytics', label: 'Analytics', icon: BarChart3 },
+  { href: '/',          label: 'Dashboard', icon: 'fa-solid fa-gauge-high' },
+  { href: '/contacts',  label: 'Contacts',  icon: 'fa-solid fa-address-book' },
+  { href: '/leads',     label: 'Leads',     icon: 'fa-solid fa-chart-line' },
+  { href: '/pipeline',  label: 'Pipeline',  icon: 'fa-solid fa-filter' },
+  { href: '/tasks',     label: 'Tasks',     icon: 'fa-solid fa-circle-check' },
+  { href: '/emails',    label: 'Emails',    icon: 'fa-solid fa-envelope' },
+  { href: '/analytics', label: 'Analytics', icon: 'fa-solid fa-chart-bar' },
 ]
 
 export default function Sidebar() {
@@ -28,32 +24,51 @@ export default function Sidebar() {
       borderRight: '1px solid var(--border)',
       display: 'flex',
       flexDirection: 'column',
-      padding: '24px 0',
       zIndex: 100,
     }}>
       {/* Logo */}
-      <div style={{ padding: '0 20px 28px', borderBottom: '1px solid var(--border)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div style={{
+        padding: '22px 20px 20px',
+        borderBottom: '1px solid var(--border)',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
           <div style={{
-            width: 32, height: 32,
-            background: 'var(--accent)',
-            borderRadius: 8,
+            width: 36, height: 36,
+            background: 'linear-gradient(135deg, var(--accent), #9b6cff)',
+            borderRadius: 10,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 4px 14px rgba(108,99,255,0.4)',
           }}>
-            <Zap size={16} color="#fff" fill="#fff" />
+            <i className="fa-solid fa-bolt" style={{ color: '#fff', fontSize: 15 }} />
           </div>
           <div>
-            <div style={{ fontFamily: 'var(--font-head)', fontWeight: 700, fontSize: 15, letterSpacing: '-0.02em' }}>
+            <div style={{
+              fontFamily: 'var(--font-head)',
+              fontWeight: 800,
+              fontSize: 16,
+              color: 'var(--text)',
+              letterSpacing: '-0.02em',
+            }}>
               PulseCRM
             </div>
-            <div style={{ fontSize: 11, color: 'var(--text-3)' }}>Workspace</div>
+            <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 1 }}>Workspace</div>
           </div>
         </div>
       </div>
 
       {/* Nav */}
-      <nav style={{ flex: 1, padding: '16px 10px', display: 'flex', flexDirection: 'column', gap: 2 }}>
-        {NAV.map(({ href, label, icon: Icon }) => {
+      <nav style={{
+        flex: 1,
+        padding: '14px 10px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 3,
+        overflowY: 'auto',
+      }}>
+        <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-3)', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '4px 10px 8px' }}>
+          Main Menu
+        </div>
+        {NAV.map(({ href, label, icon }) => {
           const active = pathname === href || (href !== '/' && pathname.startsWith(href))
           return (
             <Link
@@ -62,24 +77,39 @@ export default function Sidebar() {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 10,
-                padding: '8px 12px',
-                borderRadius: 8,
-                color: active ? 'var(--accent-2)' : 'var(--text-2)',
-                background: active ? 'var(--accent-dim)' : 'transparent',
-                fontWeight: active ? 500 : 400,
+                gap: 11,
+                padding: '9px 12px',
+                borderRadius: 9,
+                color: active ? '#fff' : 'var(--text-2)',
+                background: active
+                  ? 'linear-gradient(90deg, rgba(108,99,255,0.25), rgba(108,99,255,0.1))'
+                  : 'transparent',
+                borderLeft: active ? '3px solid var(--accent)' : '3px solid transparent',
+                fontWeight: active ? 600 : 400,
                 fontSize: 13.5,
                 transition: 'all 0.15s',
                 textDecoration: 'none',
+                letterSpacing: '-0.01em',
               }}
               onMouseEnter={e => {
-                if (!active) e.currentTarget.style.background = 'var(--bg-2)'
+                if (!active) {
+                  e.currentTarget.style.background = 'var(--bg-2)'
+                  e.currentTarget.style.color = 'var(--text)'
+                }
               }}
               onMouseLeave={e => {
-                if (!active) e.currentTarget.style.background = 'transparent'
+                if (!active) {
+                  e.currentTarget.style.background = 'transparent'
+                  e.currentTarget.style.color = 'var(--text-2)'
+                }
               }}
             >
-              <Icon size={15} strokeWidth={active ? 2.5 : 2} />
+              <i className={icon} style={{
+                fontSize: 14,
+                width: 18,
+                textAlign: 'center',
+                color: active ? 'var(--accent-2)' : 'inherit',
+              }} />
               {label}
             </Link>
           )
@@ -87,21 +117,51 @@ export default function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div style={{ padding: '16px 10px', borderTop: '1px solid var(--border)' }}>
+      <div style={{ padding: '12px 10px', borderTop: '1px solid var(--border)' }}>
         <Link
           href="/settings"
           style={{
-            display: 'flex', alignItems: 'center', gap: 10,
-            padding: '8px 12px', borderRadius: 8,
+            display: 'flex', alignItems: 'center', gap: 11,
+            padding: '9px 12px', borderRadius: 9,
             color: 'var(--text-3)', fontSize: 13.5,
             transition: 'all 0.15s',
+            borderLeft: '3px solid transparent',
           }}
-          onMouseEnter={e => { e.currentTarget.style.color = 'var(--text-2)'; e.currentTarget.style.background = 'var(--bg-2)' }}
-          onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-3)'; e.currentTarget.style.background = 'transparent' }}
+          onMouseEnter={e => {
+            e.currentTarget.style.color = 'var(--text)'
+            e.currentTarget.style.background = 'var(--bg-2)'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.color = 'var(--text-3)'
+            e.currentTarget.style.background = 'transparent'
+          }}
         >
-          <Settings size={15} />
+          <i className="fa-solid fa-gear" style={{ fontSize: 14, width: 18, textAlign: 'center' }} />
           Settings
         </Link>
+
+        {/* User badge */}
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 10,
+          padding: '10px 12px',
+          marginTop: 6,
+          background: 'var(--bg-2)',
+          borderRadius: 9,
+          border: '1px solid var(--border)',
+        }}>
+          <div style={{
+            width: 28, height: 28, borderRadius: '50%',
+            background: 'linear-gradient(135deg, var(--accent), #9b6cff)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 11, fontWeight: 700, color: '#fff',
+          }}>
+            <i className="fa-solid fa-user" style={{ fontSize: 11 }} />
+          </div>
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text)' }}>My Workspace</div>
+            <div style={{ fontSize: 10, color: 'var(--text-3)' }}>Free plan</div>
+          </div>
+        </div>
       </div>
     </aside>
   )
