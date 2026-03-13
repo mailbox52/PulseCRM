@@ -11,6 +11,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -18,16 +19,25 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        <style>{`
+          .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-w);
+            padding: 32px 36px;
+            min-height: 100vh;
+            background: var(--bg);
+            overflow-x: hidden;
+          }
+          @media (max-width: 768px) {
+            .main-content {
+              margin-left: 0;
+              padding: 80px 16px 24px;
+            }
+          }
+        `}</style>
         <div style={{ display: 'flex', minHeight: '100vh' }}>
           <Sidebar />
-          <main style={{
-            flex: 1,
-            marginLeft: 'var(--sidebar-w)',
-            padding: '32px 36px',
-            minHeight: '100vh',
-            background: 'var(--bg)',
-            overflowY: 'auto',
-          }}>
+          <main className="main-content">
             {children}
           </main>
         </div>

@@ -100,3 +100,45 @@ button {
   padding: 0; margin: -1px; overflow: hidden;
   clip: rect(0,0,0,0); border: 0;
 }
+
+/* ================================
+   Mobile responsive overrides
+   ================================ */
+@media (max-width: 768px) {
+  /* Tighter font size on small screens */
+  html, body { font-size: 14px; }
+
+  /* Stack grids to single column */
+  .mobile-stack {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Full-width tables scroll horizontally */
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Page headers stack */
+  .page-header-inner {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  /* Modals full-width on mobile */
+  .modal-inner {
+    max-width: 100% !important;
+    margin: 0 8px !important;
+  }
+
+  /* Kanban board scrolls horizontally */
+  .kanban-board {
+    padding-bottom: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  html, body { font-size: 13.5px; }
+}
